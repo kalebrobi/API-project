@@ -37,7 +37,7 @@ module.exports = {
       price: 80
     },
     {
-      ownerId: 3,
+      ownerId: 2,
       address: '403 Winter Way',
       city: 'Scranton',
       state: 'Pennsylvania',
