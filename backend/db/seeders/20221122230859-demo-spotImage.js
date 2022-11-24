@@ -14,14 +14,17 @@ module.exports = {
       {
         spotId: 1,
         url: 'spotImage1.io',
+        preview: true
       },
       {
         spotId: 2,
         url: 'spotImage2.io',
+        preview: true
       },
       {
         spotId: 3,
         url: 'spotImage3.io',
+        preview: false 
       }
     ], {})
   },

@@ -28,6 +28,24 @@ module.exports = {
       userId: 1,
       startDate: '2022-12-26', //year month date
       endDate: '2022-12-29'
+    },
+    {
+      spotId: 1,
+      userId: 4,
+      startDate: '2022-12-15', //year month date
+      endDate: '2022-12-20'
+    },
+    {
+      spotId: 2,
+      userId: 5,
+      startDate: '2022-12-22', //year month date
+      endDate: '2022-12-25'
+    },
+    {
+      spotId: 3,
+      userId: 6,
+      startDate: '2022-12-11', //year month date
+      endDate: '2022-12-12'
     }
 
    ], {})
@@ -37,7 +55,7 @@ module.exports = {
     options.tableName = 'Bookings';
     const Op = Sequelize.Op
     await queryInterface.bulkDelete(options, {
-      userId: { [Op.in]: [1, 2, 3] }
+      userId: { [Op.in]: [1, 2, 3, 4, 5, 6] }
    }, {});
   }
 };
