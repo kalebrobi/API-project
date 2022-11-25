@@ -114,9 +114,29 @@ const {address, city, state, country, lat, lng, name, description, price} = req.
   return res.json(
     newHome
   )
-
 })
 
+router.post('/:spotId/images', requireAuth,
+async(req, res) => {
+  // const {url, preview } = req.body
+  const spot = await Spot.findByPk(req.params.spotId);
+  if(spot){
+  const {url, preview } = req.body
+  const newImage = await spot.createSpotImage({
+    url,
+    preview,
+  })
+  console.log(newImage)
+  res.json({
+    id: newImage.id,
+    url: newImage.url,
+    preview: newImage.preview
+  })
+} else {
+  res.statusCode = 404
+  res.json({message: "Spot could not be found"})
+}
+})
 
 
 
