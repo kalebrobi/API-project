@@ -25,6 +25,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'SpotImage',
+    defaultScope: {
+      attributes: {
+        include: ['id', 'url', 'preview']
+      }
+    }
   });
   return SpotImage;
 };
