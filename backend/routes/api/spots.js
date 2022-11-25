@@ -134,7 +134,10 @@ async(req, res) => {
   })
 } else {
   res.statusCode = 404
-  res.json({message: "Spot could not be found"})
+  res.json({
+    message: "Spot could not be found",
+    statusCode: 404
+  })
 }
 })
 
