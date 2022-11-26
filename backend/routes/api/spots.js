@@ -4,6 +4,8 @@ const  { Spot, Review, SpotImage, User }  = require('../../db/models');
 const { requireAuth, restoreUser} = require('../../utils/auth')
 const { check } = require('express-validator')
 const { handleValidationErrors } = require('../../utils/validation');
+const spot = require('../../db/models/spot');
+
 
 const validateSignup = [
   check('address')
@@ -39,6 +41,7 @@ const validateSignup = [
   handleValidationErrors
 ];
 
+//Get all Spots
 router.get('/', async(req,res) => {
   const spots = await Spot.findAll({
     include: [
@@ -93,8 +96,7 @@ router.get('/', async(req,res) => {
   })
 })
 
-///All spots for current User
-
+//Get all Spots owned by the Current User
 router.get('/current', requireAuth, restoreUser,
 async(req, res) => {
   const {user} = req
@@ -150,7 +152,6 @@ arrayOfSpots.forEach(eachSpot => {
 
 
 //create a spot
-
 router.post('/', requireAuth, validateSignup,
 async(req, res) => {
 const {address, city, state, country, lat, lng, name, description, price} = req.body;
@@ -172,6 +173,7 @@ const {address, city, state, country, lat, lng, name, description, price} = req.
   )
 })
 
+//Add an Image to a Spot based on the Spot's id
 router.post('/:spotId/images', requireAuth,
 async(req, res) => {
   // const {url, preview } = req.body
@@ -182,7 +184,6 @@ async(req, res) => {
     url,
     preview,
   })
-  console.log(newImage)
   res.json({
     id: newImage.id,
     url: newImage.url,
@@ -197,6 +198,60 @@ async(req, res) => {
 }
 })
 
+//Get details of a Spot from an id
+router.get('/:spotId', async(req,res) => {
+  const spotDetails = await Spot.findByPk(req.params.spotId, {
+    include:[
+      {
+        model: Review
+      },
+      {
+        model: SpotImage,
+        attributes: {
+          exclude: ['spotId', 'createdAt', 'updatedAt']
+        }
+      },
+      {
+        model: User,
+        attributes: {
+          exclude: ["hashedPassword", "email", "createdAt", "updatedAt",'username']
+        },
+      }
+    ]
+  })
+
+  if(spotDetails){
+
+  const changeSpotDeets = [spotDetails.toJSON()]
+
+  let reviewArrayOfObjs = changeSpotDeets[0].Reviews
+
+    let sum = 0
+    let count = 0
+  reviewArrayOfObjs.forEach(review => {
+    if(review.stars) {
+      sum += review.stars
+      count++
+    }
+  })
+  let avg = sum / count
+  changeSpotDeets[0].avgStarRating = avg
+  changeSpotDeets[0].numReviews = count
+  delete changeSpotDeets[0].Reviews
+  let spotDetailObj = changeSpotDeets[0]
+
+  spotDetailObj.Owner = spotDetailObj.User
+  delete spotDetailObj.User
+
+  res.json(spotDetailObj)
+} else {
+  res.statusCode = 404
+  res.json({
+    message: "Spot couldn't be found",
+    statusCode: 404
+  })
+}
+})
 
 
 
