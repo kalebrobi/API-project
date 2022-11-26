@@ -117,6 +117,11 @@ module.exports = (sequelize, DataTypes) => {
         },
         loginUser: {
           attributes: {}
+        },
+        getReviewsOfUser: {
+          attributes: {
+            exclude: ["hashedPassword", "email", "createdAt", "updatedAt",'username']
+          }
         }
       }
     }
