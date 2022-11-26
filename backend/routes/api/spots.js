@@ -253,6 +253,57 @@ router.get('/:spotId', async(req,res) => {
 }
 })
 
+router.put('/:spotId', requireAuth,validateSignup, async(req,res) => {
+  const spotToUpdate = await Spot.findByPk(req.params.spotId);
+  if(spotToUpdate){
+  const {address, city, state, country, lat, lng, name, description, price} = req.body
+  if(address){
+    spotToUpdate.address = address
+  }
+  if(city){
+    spotToUpdate.city = city
+  }
+  if(state){
+    spotToUpdate.state = state
+  }
+  if(country){
+    spotToUpdate.country = country
+  }
+  if(lat){
+    spotToUpdate.lat = lat
+  }
+  if(lng){
+    spotToUpdate.lng = lng
+  }
+  if(name){
+    spotToUpdate.name = name
+  }
+  if(description){
+    spotToUpdate.description = description
+  }
+  if(price){
+    spotToUpdate.price = price
+  }
+
+  await spotToUpdate.save();
+  res.json(spotToUpdate)
+} else {
+  res.statusCode = 404
+  res.json({
+    message: "Spot could not be found",
+    statusCode: 404
+  })
+}
+
+})
+
+
+
+
+
+
+
+
 
 
 
