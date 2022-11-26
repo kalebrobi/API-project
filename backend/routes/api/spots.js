@@ -93,6 +93,62 @@ router.get('/', async(req,res) => {
   })
 })
 
+///All spots for current User
+
+router.get('/current', requireAuth, restoreUser,
+async(req, res) => {
+  const {user} = req
+  usersId = user.id
+  const usersSpots = await Spot.findAll({
+    where: {
+      ownerId: user.id
+    },
+    include: [
+      {
+        model: Review
+      },
+      {
+        model: SpotImage
+      }
+    ]
+  })
+  let arrayOfSpots = []
+  usersSpots.forEach(spot => {
+    arrayOfSpots.push(spot.toJSON())
+  })
+  let sum = 0
+  let count = 0
+  arrayOfSpots.forEach(spot => {
+    let reviewsForEachSpot = spot.Reviews
+    reviewsForEachSpot.forEach(eachReview => {
+     if(eachReview.stars){
+       sum++
+       count = count + eachReview.stars
+     }
+    })
+    let avg = count / sum
+    spot.avgRating = avg
+    delete spot.Reviews
+})
+arrayOfSpots.forEach(eachSpot => {
+  eachSpot.SpotImages.forEach(eachImageObj => {
+   // console.log(eachImageObj.preview)
+    if(eachImageObj.preview === true) {
+      //console.log(eachImageObj)
+     eachSpot.preview = eachImageObj.url
+    }
+  })
+  if(!eachSpot.preview) {
+    eachSpot.preview = 'No preview image found'
+  }
+  delete eachSpot.SpotImages
+ })
+  res.json({
+    Spots: arrayOfSpots
+  })
+})
+
+
 //create a spot
 
 router.post('/', requireAuth, validateSignup,
