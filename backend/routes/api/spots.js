@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const  { Spot, Review, SpotImage, User }  = require('../../db/models');
-const { requireAuth, restoreUser} = require('../../utils/auth')
+const { requireAuth, restoreUser, setTokenCookie} = require('../../utils/auth')
 const { check } = require('express-validator')
 const { handleValidationErrors } = require('../../utils/validation');
 const spot = require('../../db/models/spot');
+const user = require('../../db/models/user');
 
 
 const validateSignup = [
@@ -40,6 +41,17 @@ const validateSignup = [
     .withMessage('Price per day is required'),
   handleValidationErrors
 ];
+
+const validateReviewPost = [
+  check('review')
+    .exists({checkFalsy: true})
+    .withMessage('Review text is required'),
+  check('stars')
+    .exists({ checkFalsy: true })
+    .isInt({min: 1, max:5})
+    .withMessage("Stars must be an integer from 1 to 5"),
+ handleValidationErrors
+]
 
 //Get all Spots
 router.get('/', async(req,res) => {
@@ -297,7 +309,48 @@ router.put('/:spotId', requireAuth,validateSignup, async(req,res) => {
 
 })
 
+router.post('/:spotId/reviews', requireAuth, validateReviewPost,
+async(req, res) => {
 
+let reviewList = []
+const spotToAddReviewTo = await Spot.findByPk(req.params.spotId);
+if(spotToAddReviewTo) {
+const reviewsForSpot = await spotToAddReviewTo.getReviews()
+
+
+reviewsForSpot.forEach(review => {
+  reviewList.push(review.toJSON())
+})
+
+for(let i = 0; i < reviewList.length; i++){
+  if(reviewList[i].userId === req.user.id){
+    res.statusCode = 403
+    return res.json({
+      message: "User already has a review for this spot",
+      statusCode: 403
+    })
+  }
+}
+   // console.log(spotToAddReviewTo)
+    const {review, stars} = req.body
+    const newReview = await spotToAddReviewTo.createReview({
+      userId: req.user.id,
+      review,
+      stars
+    })
+
+    res.statusCode = 201
+    res.json(
+      newReview
+  )
+  } else {
+    res.statusCode = 404
+    res.json({
+      message: "Spot couldnt be found",
+      statusCode: 404
+    })
+  }
+})
 
 
 
