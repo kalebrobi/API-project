@@ -80,7 +80,7 @@ async(req, res) => {
 modifiedArr.forEach(eachModifiedRev => {
   if(eachModifiedRev.Spot){
     let spotObj = eachModifiedRev.Spot
-    if(spotObj.SpotImages){
+    if(spotObj.SpotImages[0]){
      spotObj.previewImage = spotObj.SpotImages[0].url
      delete spotObj.SpotImages
     } else {
