@@ -13,7 +13,6 @@ const { requireAuth, restoreUser } = require('../../utils/auth');
 //step 2: return all the bookings using that users id
 
 router.get('/current', requireAuth, async(req, res) => {
-  console.log(req.user.id)
   const bookingsForUser = await Booking.findAll({
     where: {
       userId: req.user.id
@@ -48,14 +47,49 @@ bookingsArr.forEach(eachBooking => {
   }
 })
 
-
-  console.log(bookingsForUser)
-
   res.json({
     Bookings: bookingsArr
   })
 })
 
+//edit a booking by the booking id
+//the current user MUST be the the one who the booking belongs to to edit it
+//so the userId on the booking MUST match the current users Id
+
+router.put('/:bookingId', requireAuth, async(req, res) => {
+  console.log(req.user.id)
+  const bookingToBeEdited = await Booking.findByPk(req.params.bookingId)
+  if(bookingToBeEdited){
+
+  if(req.user.id === bookingToBeEdited.userId){
+    const {startDate, endDate} = req.body
+
+    if(startDate){
+      bookingToBeEdited.startDate = startDate
+    }
+    if(endDate) {
+      bookingToBeEdited.endDate = endDate
+    }
+    await bookingToBeEdited.save()
+    res.json(bookingToBeEdited)
+
+  } else {
+    res.statusCode = 403
+    res.json({
+      message: "Forbidden",
+      statusCode: 403
+    })
+  }
+} else {
+  res.statusCode = 404
+  res.json({
+    message: "Booking couldn't be found",
+    statusCode: 404
+  })
+
+}
+
+})
 
 
 
