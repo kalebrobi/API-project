@@ -403,9 +403,11 @@ router.post('/:spotId/bookings', requireAuth, async(req, res) => {
       }
     })
     let modiFiedBookingsArr = []
+    console.log(start.getTime())
     bookings.forEach(booking => {
       modiFiedBookingsArr.push(booking.toJSON())
     })
+    console.log(modiFiedBookingsArr)
     for(let i = 0; i < modiFiedBookingsArr.length; i++) {
       let eachBooking = modiFiedBookingsArr[i]
       if(start.getTime() >= eachBooking.startDate.getTime() && end.getTime() <= eachBooking.endDate.getTime()){
@@ -457,17 +459,42 @@ router.post('/:spotId/bookings', requireAuth, async(req, res) => {
     statusCode: 404
   })
 }
-//   console.log(req.user.id)
 
-//  console.log(spotTobeBooked)
+})
+
+//get all bookings for a spot by spotId
+
+router.get('/:spotId/bookings', requireAuth,
+async(req, res) => {
+  const bookedSpot = await Spot.findByPk(req.params.spotId)
+
+  if(bookedSpot) {
+  bookingsForSpot = await Booking.findAll({
+    where: {
+      spotId: req.params.spotId
+    },
+    include: [
+      {
+        model: User.scope('getReviewsOfUser')
+      }
+    ]
+  })
+  
+  res.json({
+    Bookings: bookingsForSpot
+  })
+} else {
+  res.statusCode = 404
+  res.json({
+    message: "Spot couldn't be found",
+    statusCode: 404
+  })
+}
+
 })
 
 
 
 
 
-
-
-
 module.exports = router;
-
