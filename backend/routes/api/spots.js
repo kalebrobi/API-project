@@ -383,8 +383,7 @@ router.get('/:spotId/reviews', async (req, res) => {
     message: "Spot couldn't be found",
     statusCode: 404
   })
-} 
-
+}
 
 })
 
