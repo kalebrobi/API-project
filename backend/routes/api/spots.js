@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const  { Spot, Review, SpotImage, User }  = require('../../db/models');
+const  { Spot, Review, SpotImage, User, ReviewImage }  = require('../../db/models');
 const { requireAuth, restoreUser, setTokenCookie} = require('../../utils/auth')
 const { check } = require('express-validator')
 const { handleValidationErrors } = require('../../utils/validation');
@@ -350,6 +350,42 @@ for(let i = 0; i < reviewList.length; i++){
       statusCode: 404
     })
   }
+})
+
+
+//get reviews by spotId
+
+router.get('/:spotId/reviews', async (req, res) => {
+  const reviewedSpot = await Spot.findByPk(req.params.spotId)
+
+  if(reviewedSpot) {
+  const reviews = await Review.findAll({
+    where: {
+      userId: req.params.spotId
+    },
+    include: [
+      {
+        model: User.scope('getReviewsOfUser') //using a scope i made for an earlier route. disregard the name of it in this context.
+      },
+      {
+        model: ReviewImage.scope('getReviewsOfUser') //using a scope i made for an earlier route. disregard the name of it in this context.
+      }
+    ]
+  })
+
+  console.log(reviews)
+  res.json({
+    Reviews: reviews
+  })
+} else {
+  res.statusCode = 404
+  res.json({
+    message: "Spot couldn't be found",
+    statusCode: 404
+  })
+} 
+
+
 })
 
 
