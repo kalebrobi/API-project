@@ -5,6 +5,18 @@ const { requireAuth, restoreUser, setTokenCookie} = require('../../utils/auth')
 const { check } = require('express-validator')
 const { handleValidationErrors } = require('../../utils/validation');
 
+const validateReviewPost = [
+  check('review')
+    .exists({checkFalsy: true})
+    .withMessage('Review text is required'),
+  check('stars')
+    .exists({ checkFalsy: true })
+    .isInt({min: 1, max:5})
+    .withMessage("Stars must be an integer from 1 to 5"),
+ handleValidationErrors
+]
+
+
 
 //create an image for a review by reviewId
 router.post('/:reviewId/images', requireAuth, async (req, res) => {
@@ -96,6 +108,30 @@ modifiedArr.forEach(eachModifiedRev => {
 
 )
 })
+
+
+router.put('/:reviewId', requireAuth, validateReviewPost, async(req, res) => {
+  const reviewToUpdate = await Review.findByPk(req.params.reviewId);
+  if(reviewToUpdate){
+    const {review, stars} = req.body
+    if(review){
+      reviewToUpdate.review = review
+    }
+    if(stars){
+      reviewToUpdate.stars = stars
+    }
+    await reviewToUpdate.save()
+    res.json(reviewToUpdate)
+
+  } else {
+    res.statusCode = 404
+    res.json({
+      message: "Review couldn't be found",
+      statusCode: 404
+    })
+  }
+})
+
 
 
 
