@@ -403,11 +403,9 @@ router.post('/:spotId/bookings', requireAuth, async(req, res) => {
       }
     })
     let modiFiedBookingsArr = []
-    console.log(start.getTime())
     bookings.forEach(booking => {
       modiFiedBookingsArr.push(booking.toJSON())
     })
-    console.log(modiFiedBookingsArr)
     for(let i = 0; i < modiFiedBookingsArr.length; i++) {
       let eachBooking = modiFiedBookingsArr[i]
       if(start.getTime() >= eachBooking.startDate.getTime() && end.getTime() <= eachBooking.endDate.getTime()){
