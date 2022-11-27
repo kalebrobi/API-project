@@ -6,7 +6,7 @@ const { check } = require('express-validator')
 const { handleValidationErrors } = require('../../utils/validation');
 
 
-
+//create an image for a review by reviewId
 router.post('/:reviewId/images', requireAuth, async (req, res) => {
   const reviewToAddImageToo = await Review.findByPk(req.params.reviewId)
   if(reviewToAddImageToo){
@@ -45,7 +45,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
    }
 })
 
-
+//get reviews of current user
 router.get('/current', requireAuth, restoreUser,
 async(req, res) => {
   const { user } = req
