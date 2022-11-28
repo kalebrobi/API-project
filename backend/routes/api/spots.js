@@ -70,6 +70,8 @@ const validateReviewPost = [
 router.get('/', async(req,res) => {
 
   let {page, size} = req.query
+  page = Number(page)
+  size = Number(size)
 
   if(!page){
     page = 1
@@ -125,19 +127,21 @@ router.get('/', async(req,res) => {
    // console.log(eachImageObj.preview)
     if(eachImageObj.preview === true) {
       //console.log(eachImageObj)
-     eachSpot.preview = eachImageObj.url
-    }
-  })
-  if(!eachSpot.preview) {
-    eachSpot.preview = 'No preview image found'
+     eachSpot.previewImage = eachImageObj.url
+    // delete eachSpot.SpotImages
+    } else {
+    eachSpot.previewImage = 'No preview image found'
+    //delete eachSpot.SpotImages
   }
-  delete eachSpot.SpotImages
+  })
+ delete eachSpot.SpotImages
+
  })
 
   res.json({
-    Spots: spotsList
-    // page: parseInt(page),
-    // size: parseInt(size)
+    Spots: spotsList,
+    page,
+    size
   })
 })
 
@@ -184,12 +188,15 @@ arrayOfSpots.forEach(eachSpot => {
    // console.log(eachImageObj.preview)
     if(eachImageObj.preview === true) {
       //console.log(eachImageObj)
-     eachSpot.preview = eachImageObj.url
+     eachSpot.previewImage = eachImageObj.url
+    // delete eachSpot.SpotImages
     }
-  })
-  if(!eachSpot.preview) {
-    eachSpot.preview = 'No preview image found'
+    if(eachImageObj.preview !== true) {
+    eachSpot.previewImage = 'No preview image found'
+    //delete eachSpot.SpotImages
   }
+  })
+
   delete eachSpot.SpotImages
  })
   res.json({
@@ -214,7 +221,7 @@ const {address, city, state, country, lat, lng, name, description, price} = req.
     description,
     price
   })
-
+  res.statusCode = 201
   return res.json(
     newHome
   )
