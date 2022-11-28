@@ -443,6 +443,7 @@ router.post('/:spotId/bookings', requireAuth, async(req, res) => {
     for(let i = 0; i < modiFiedBookingsArr.length; i++) {
       let eachBooking = modiFiedBookingsArr[i]
       if(start.getTime() >= eachBooking.startDate.getTime() && end.getTime() <= eachBooking.endDate.getTime()){
+        res.statusCode = 403
        return res.json({
           message: "Sorry, this spot is already booked for the specified dates",
           statusCode: 403,
@@ -451,6 +452,7 @@ router.post('/:spotId/bookings', requireAuth, async(req, res) => {
           }
         })
       } else if(end.getTime() >= eachBooking.startDate.getTime() && end.getTime() <= eachBooking.endDate.getTime()){
+        res.statusCode = 403
         return res.json({
            message: "Sorry, this spot is already booked for the specified dates",
            statusCode: 403,
