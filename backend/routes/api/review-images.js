@@ -4,18 +4,21 @@ const  { Spot, Review, SpotImage, User, ReviewImage, Booking }  = require('../..
 const { requireAuth, restoreUser, setTokenCookie} = require('../../utils/auth')
 
 
-//delete a spotImage
-//make sure that the spot belongs to current user
+
+//delete an existing image for a review by the reviewImage id
+//confirm that the current user is the one who left the review the image is associated with
+
 router.delete('/:imageId', requireAuth, async(req, res) => {
-  const imageToDelete = await SpotImage.findByPk(req.params.imageId)
-  if(imageToDelete){
-    const spotForTheImage = await Spot.findOne({
+  const reviewImageTobeDeleted = await ReviewImage.findByPk(req.params.imageId)
+  if(reviewImageTobeDeleted) {
+    const reviewForImage = await Review.findOne({
       where: {
-        id: imageToDelete.spotId
+        id: reviewImageTobeDeleted.reviewId
       }
     })
-    if(spotForTheImage.ownerId === req.user.id) {
-      await imageToDelete.destroy()
+
+    if(reviewForImage.userId === req.user.id){
+      await reviewImageTobeDeleted.destroy()
       res.statusCode = 200
       res.json({
         message: "Successfully deleted",
@@ -28,15 +31,19 @@ router.delete('/:imageId', requireAuth, async(req, res) => {
         statusCode: 403
       })
     }
-
   } else {
     res.statusCode = 404
     res.json({
-      message: "Spot Image couldn't be found",
+      message: "Review Image couldn't be found",
       statusCode: 404
     })
   }
+
 })
+
+
+
+
 
 
 

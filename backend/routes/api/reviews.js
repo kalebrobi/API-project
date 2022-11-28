@@ -132,9 +132,34 @@ router.put('/:reviewId', requireAuth, validateReviewPost, async(req, res) => {
   }
 })
 
+//delete a review by reviewId
+//make sure that the review belongs to the current user
+router.delete('/:reviewId', requireAuth, async(req, res) => {
+  const reviewToDelete = await Review.findByPk(req.params.reviewId)
+  if(reviewToDelete){
+    if(reviewToDelete.userId === req.user.id){
+      await reviewToDelete.destroy()
+      res.statusCode = 200
+      res.json({
+        message: "Successfully deleted",
+        statusCode: 200
+      })
+    } else {
+      res.statusCode = 403
+      res.json({
+        message: "Forbidden",
+        statusCode: 403
+      })
+    }
 
-
-
+  } else {
+    res.statusCode = 404
+    res.json({
+      message: "Review couldn't be found",
+      statusCode: 404
+    })
+  }
+})
 
 
 

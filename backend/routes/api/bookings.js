@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const  { Spot, Review, SpotImage, User, ReviewImage, Booking }  = require('../../db/models');
-const spot = require('../../db/models/spot');
 const { requireAuth, restoreUser } = require('../../utils/auth');
 
 
@@ -91,6 +90,46 @@ router.put('/:bookingId', requireAuth, async(req, res) => {
 
 })
 
+//delete a booking
+//only a user who made the booking OR the owner of the spot can delete a booking
+//step 1: get the current user using req.user
+//step 2: get the booking using findByPk
+//step 3: get the spot for the booking
+//step 4: confirm that the current user is either the spotOwner OR the user who set the booking
+
+
+router.delete('/:bookingId', requireAuth, async(req, res) => {
+  const bookingToDelete = await Booking.findByPk(req.params.bookingId)
+  if(bookingToDelete) {
+    const spotForTheBooking = await Spot.findOne({
+      where: {
+        id: bookingToDelete.spotId
+      }
+    })
+
+    if(req.user.id === bookingToDelete.userId || req.user.id === spotForTheBooking.ownerId) {
+      await bookingToDelete.destroy()
+      res.statusCode = 200
+      res.json({
+        message: "Successfully deleted",
+        statusCode: 200
+      })
+    } else {
+      res.statusCode = 403
+      res.json({
+        message: "Forbidden",
+        statusCode: 403
+      })
+    }
+
+  } else {
+    res.statusCode = 404
+    res.json({
+      message: "Booking couldn't be found",
+      statusCode: 404
+    })
+  }
+})
 
 
 
