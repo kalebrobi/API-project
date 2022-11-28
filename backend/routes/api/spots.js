@@ -54,10 +54,37 @@ const validateReviewPost = [
  handleValidationErrors
 ]
 
+const queryValidators = [
+  check('page')
+    .isInt({min: 1, max: 10})
+    .withMessage('Page must be greater than or equal to 1'),
+  check('size')
+    .isInt({min: 1, max: 20})
+    .withMessage('Size must be greater than or equal to 1'),
+ handleValidationErrors
+]
+
 
 
 //Get all Spots
-router.get('/', async(req,res) => {
+router.get('/', queryValidators, async(req,res) => {
+
+  let {page, size} = req.query
+
+  if(!page){
+    page = 1
+  }
+  if(!size) {
+    size = 20
+  }
+
+  let pagination = {}
+  if (parseInt(page) >= 1 && parseInt(size) >= 1) {
+      pagination.limit = size
+      pagination.offset = size * (page - 1)
+  }
+  console.log(pagination)
+
   const spots = await Spot.findAll({
     include: [
       {
@@ -66,7 +93,8 @@ router.get('/', async(req,res) => {
       {
         model: SpotImage
       }
-    ]
+    ],
+    ...pagination
   })
 
  let spotsList = []
@@ -107,9 +135,13 @@ router.get('/', async(req,res) => {
  })
 
   res.json({
-    Spots: spotsList
+    Spots: spotsList,
+    page: parseInt(page),
+    size: parseInt(size)
   })
 })
+
+
 
 //Get all Spots owned by the Current User
 router.get('/current', requireAuth, restoreUser,
@@ -411,6 +443,7 @@ router.post('/:spotId/bookings', requireAuth, async(req, res) => {
     for(let i = 0; i < modiFiedBookingsArr.length; i++) {
       let eachBooking = modiFiedBookingsArr[i]
       if(start.getTime() >= eachBooking.startDate.getTime() && end.getTime() <= eachBooking.endDate.getTime()){
+        res.statusCode = 403
        return res.json({
           message: "Sorry, this spot is already booked for the specified dates",
           statusCode: 403,
@@ -419,6 +452,7 @@ router.post('/:spotId/bookings', requireAuth, async(req, res) => {
           }
         })
       } else if(end.getTime() >= eachBooking.startDate.getTime() && end.getTime() <= eachBooking.endDate.getTime()){
+        res.statusCode = 403
         return res.json({
            message: "Sorry, this spot is already booked for the specified dates",
            statusCode: 403,
