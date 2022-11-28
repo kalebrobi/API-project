@@ -54,20 +54,20 @@ const validateReviewPost = [
  handleValidationErrors
 ]
 
-const queryValidators = [
-  check('page')
-    .isInt({min: 1, max: 10})
-    .withMessage('Page must be greater than or equal to 1'),
-  check('size')
-    .isInt({min: 1, max: 20})
-    .withMessage('Size must be greater than or equal to 1'),
- handleValidationErrors
-]
+// const queryValidators = [
+//   check('page')
+//     .isInt({min: 1, max: 10})
+//     .withMessage('Page must be greater than or equal to 1'),
+//   check('size')
+//     .isInt({min: 1, max: 20})
+//     .withMessage('Size must be greater than or equal to 1'),
+//  handleValidationErrors
+// ]
 
 
 
 //Get all Spots
-router.get('/', queryValidators, async(req,res) => {
+router.get('/', async(req,res) => {
 
   let {page, size} = req.query
 
@@ -135,9 +135,9 @@ router.get('/', queryValidators, async(req,res) => {
  })
 
   res.json({
-    Spots: spotsList,
-    page: parseInt(page),
-    size: parseInt(size)
+    Spots: spotsList
+    // page: parseInt(page),
+    // size: parseInt(size)
   })
 })
 
