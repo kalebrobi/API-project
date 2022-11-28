@@ -364,7 +364,7 @@ router.get('/:spotId/reviews', async (req, res) => {
   if(reviewedSpot) {
   const reviews = await Review.findAll({
     where: {
-      userId: req.params.spotId
+      spotId: req.params.spotId
     },
     include: [
       {
