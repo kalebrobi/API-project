@@ -479,7 +479,7 @@ async(req, res) => {
       }
     ]
   })
-  
+
   res.json({
     Bookings: bookingsForSpot
   })
@@ -491,6 +491,35 @@ async(req, res) => {
   })
 }
 
+})
+
+//delete a spot from spot table
+//spot MUST belong to the current User
+router.delete('/:spotId', requireAuth, async(req, res) => {
+  console.log(req.user)
+  const spotToDelete = await Spot.findByPk(req.params.spotId)
+  if(spotToDelete) {
+    if(spotToDelete.ownerId === req.user.id){
+      await spotToDelete.destroy()
+      res.statusCode = 200
+      res.json({
+        message: "Successfully deleted",
+        statusCode: 200
+      })
+    } else {
+      res.statusCode = 403
+      res.json({
+        message: "Forbidden",
+        statusCode: 403
+      })
+    }
+  } else {
+    res.statusCode = 404
+    res.json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+    })
+  }
 })
 
 
