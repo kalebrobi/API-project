@@ -18,6 +18,12 @@ const removeUser = () => {
   };
 };
 
+export const restoreUser = () => async dispatch => {
+  const response = await csrfFetch('/api/session');
+  const data = await response.json();
+  dispatch(setUser(data));
+  return response;
+};
 
 //login thunk
 export const login = (user) => async (dispatch) => {
@@ -33,6 +39,7 @@ export const login = (user) => async (dispatch) => {
   dispatch(setUser(data));
   return response;
 };
+
 
 //initialState
 const initialState = { user: null };
