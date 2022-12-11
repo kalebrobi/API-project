@@ -5,6 +5,7 @@ import ProfileButton from './ProfileButton';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import logoImagee from '../images/kindpng_1322163.png'
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
@@ -19,26 +20,33 @@ function Navigation({ isLoaded }){
     );
   } else {
     sessionLinks = (
+    <div className='logIn-signUp'>
       <li>
         <OpenModalButton
-          buttonText="Log In"
+          buttonText="Login"
           modalComponent={<LoginFormModal />}
         />
         <OpenModalButton
-          buttonText="Sign Up"
+          buttonText="Sign-Up"
           modalComponent={<SignupFormModal />}
         />
       </li>
+    </div>
     );
   }
 
   return (
-    <ul>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
-      </li>
-      {isLoaded && sessionLinks}
-    </ul>
+  <div className='header'>
+    <img  className='logo-image' src={logoImagee} alt='Logo'>
+    </img>
+      <ul>
+        <li className='homeLink'>
+          <NavLink exact to="/"><i className="fa-brands fa-airbnb"></i></NavLink>
+        </li>
+        {isLoaded && sessionLinks}
+      </ul>
+</div>
+
   );
 }
 

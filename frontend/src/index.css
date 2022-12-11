@@ -1,1 +1,12 @@
 /* TODO Add site wide styles */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove default styles from list items */
+ul, ol {
+  list-style: none;
+}
+
+
