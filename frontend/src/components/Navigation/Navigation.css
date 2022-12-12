@@ -1,47 +1,44 @@
+* {
+  margin: 0;
+
+}
+
+ul, ol {
+  list-style: none;
+}
 
  .hidden {
   display: none;
 }
 
 .header {
-  height: 120px;
-  width: 100%;
-  box-sizing: border-box;
-  line-break: strict;
-  line-height: 30px;
-  position: relative;
-  box-shadow: rgb(0 0 0 / 8%) 0 1px 0;
   display: flex;
-  /* position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10; */
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  z-index: 100;
+  box-shadow: rgb(0 0 0 / 8%) 0 1px 0;
+  height: 120px;
 }
 
-.homeLink {
-  position: absolute;
-  bottom: 10px;
-  margin: 10px;
-  left: 45px;
+.logo-image{
+  object-fit: contain;
+  height: 60px;
+  margin-top: 10px;
+  margin-left: 20px;
+ }
+
+
+.menu-right{
+  display: flex;
+  justify-content: center;
 }
 
-.fa-airbnb {
-  font-size: 65px;
-  color: #FF5A5F;
-}
-
-.logIn-signUp {
-  position: absolute;
-  right: 25px;
-  bottom: 20px;
-}
-
-.Login, .Sign-Up {
+.Login, .Sign-Up, .spots-button {
   margin: 10px;
   align-items: center;
   background-color: #fff;
-  border-radius: 24px;
+  border-radius: 25px;
   border-style: none;
   box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
   color: #3c4043;
@@ -51,32 +48,30 @@
   padding: 2px 24px;
 }
 
-.Login:hover, .Sign-Up:hover {
+.Login:hover, .Sign-Up:hover, .spots-button:hover {
   background: #FF5A5F;
   color:white;
 }
 
-.Login:active, .Sign-Up:active {
-  box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
-  outline: none;
+
+/* .search-bar{
+  display: flex;
+  flex: 1;
+  align-items: center;
+  max-width: fit-content;
+  padding: 10px;
+  height: 30px;
+  border: 1px solid lightgray;
+  border-radius: 300px;
 }
 
-.Login:focus, .Sign-Up:focus {
-  outline: none;
-  border: 2px solid #FF5A5F;
-}
-
-/* .logo-container {
-  display: block;
-  margin: auto;
-  height: 100px;
-  width: 350px;
+.search-bar > input {
+  border: none;
+  width: 250px;
+  text-align: center;
+  outline-width: 0;
 } */
 
-.logo-image{
-  display: block;
-  margin: auto;
-  height: 100px;
-  width: 350px;
-  padding-right: 80px;
-}
+/* .fa-magnifying-glass{
+  margin-right: 10px;
+} */
