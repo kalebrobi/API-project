@@ -9,7 +9,7 @@ const LoadAllSpots = () => {
   const spots = useSelector(state => state.spots.allSpots)
   const spotsArr = Object.values(spots)
 
-  // console.log(spotsArr)
+
 
   useEffect(() => {
     dispatch(getSpots())
