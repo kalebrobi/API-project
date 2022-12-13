@@ -1,4 +1,4 @@
-import React, {useEffect } from 'react';
+import React, {useEffect, useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux'
 import { getSpots } from '../../store/spots';
 import { NavLink } from 'react-router-dom'
@@ -12,10 +12,14 @@ const LoadAllSpots = () => {
 
 
 
+
+
+
+
+
   useEffect(() => {
     dispatch(getSpots())
   },[])
-
 
 
   if(!spots) return null
@@ -25,10 +29,10 @@ return (
   <div className='spot-list-container'>
     {spotsArr.map(spot => (
     <NavLink to={`spots/${spot.id}`} key={spot.id} className='eachCard'>
-      <div>{spot.previewImage}</div>
+      <img src={spot.previewImage}> </img>
       <div className='city_state'>{spot.city},{spot.state}</div>
       <div className='average_rating'>{spot.avgRating}</div>
-      <div className='price_night'>{spot.price} night</div>
+      <div className='price_night'>${spot.price} night</div>
     </NavLink>
     ))}
   </div>

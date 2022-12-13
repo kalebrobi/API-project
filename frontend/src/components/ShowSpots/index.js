@@ -6,17 +6,15 @@ import { useParams } from "react-router-dom";
 
 
 
-const ShowSpot = () => {
+const ShowSpots = () => {
   const {spotId} = useParams()
+
 
   return (
     <div>
-    {/* <div>{spot.previewImage}</div>
-    <div>{spot.city},{spot.state}</div>
-    <div>{spot.avgRating}</div>
-    <div>{spot.price} night</div> */}
+      Hello
     </div>
   )
 }
 
-export default ShowSpot
+export default ShowSpots

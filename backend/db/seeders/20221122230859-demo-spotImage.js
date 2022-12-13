@@ -13,18 +13,18 @@ module.exports = {
     await queryInterface.bulkInsert(options, [
       {
         spotId: 1,
-        url: 'spotImage1.io',
+        url: 'https://a0.muscache.com/im/pictures/ce9b772b-987e-4732-9d41-8e0d0ce24e43.jpg?im_w=720',
         preview: true
       },
       {
         spotId: 2,
-        url: 'spotImage2.io',
+        url: 'https://a0.muscache.com/im/pictures/a017859a-f4b8-499b-b871-f830b6053ad6.jpg?im_w=720',
         preview: true
       },
       {
         spotId: 3,
-        url: 'spotImage3.io',
-        preview: false 
+        url: 'https://a0.muscache.com/im/pictures/4df641cf-e98e-45fd-a27f-22d116d5a57e.jpg?im_w=720',
+        preview: true
       }
     ], {})
   },
@@ -33,7 +33,7 @@ module.exports = {
     options.tableName = 'SpotImages';
     const Op = Sequelize.Op;
     await queryInterface.bulkDelete(options, {
-      url: { [Op.in]: ['spotImage1.io','spotImage2.io','spotImage3.io'] }
+      url: { [Op.in]: [1,2,3] }
     }, {})
   }
 };
