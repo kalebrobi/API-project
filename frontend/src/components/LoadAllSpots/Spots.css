@@ -3,6 +3,10 @@
   justify-content: space-around;
   align-items: center; */
   /* border: 2px solid black; */
+  /* display: grid;
+
+  /* display: flex;
+  justify-content: space-around; */
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   justify-items: center;
@@ -21,8 +25,8 @@
 }
 
 .spot-list-container > * {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   border-radius: 10px;
   height: 300px;
-  width: 400px;
+  width: 300px;
 }

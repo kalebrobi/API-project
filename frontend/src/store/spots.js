@@ -2,6 +2,7 @@
 
 //action constants
 const LOAD_SPOTS = 'spots/loadSpots'
+const LOAD_A_SPOT = 'spots/loadASpot'
 // const ADD_SPOT = 'spots/addASpot'
 // const DELETE_SPOT = 'spots/deleteSpot'
 
@@ -13,6 +14,12 @@ const loadSpots = (list) => {
     list
   }
 
+}
+const loadASpot = (spot) => {
+  return {
+    type: LOAD_A_SPOT,
+    spot
+  }
 }
 
 
@@ -40,18 +47,35 @@ export const getSpots = () => async (dispatch) => {
 }
 
 
+export const getASpot = (spotId) => async (dispatch) => {
+  const response = await fetch(`/api/spots/${spotId}`)
+
+  if(response.ok) {
+    const data = await response.json()
+    dispatch(loadASpot(data))
+  }
+}
+
+
+
+
 
 const initialState = {allSpots: {}, singleSpot:{}};
 
 const spotsReducer = (state = initialState, action) => {
   switch(action.type) {
     case LOAD_SPOTS:
-      const loadState = {allSpots:{}}
+      const loadState = {allSpots:{}, singleSpot:{}}
       // const loadState = {...state}
       action.list.forEach(spot => {
         loadState.allSpots[spot.id] = spot
       });
       return loadState;
+    case LOAD_A_SPOT:
+      // const loadSpot = {allSpots: {}, singleSpot:{}}
+      const loadSpot = {...state}
+      loadSpot.singleSpot = action.spot
+      return loadSpot
     default:
        return state
   }
