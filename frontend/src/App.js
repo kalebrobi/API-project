@@ -4,6 +4,9 @@ import { Route, Switch } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import LoadAllSpots from "./components/LoadAllSpots";
+import ShowSpot from "./components/ShowSpots";
+import spotsReducer from "./store/spots";
+
 
 
 function App() {
@@ -18,9 +21,9 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route path={'/spots'}>
-            <LoadAllSpots />
-          </Route>
+          <Route exact path={'/spots'} component={LoadAllSpots} />
+          <Route exact path={'/spots/:spotId'} component={ShowSpot} />
+          {/* </Route> */}
 
         </Switch>
       )}

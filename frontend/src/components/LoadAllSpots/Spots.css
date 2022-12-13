@@ -1,0 +1,27 @@
+.spot-list-container{
+  /* display: flex;
+  justify-content: space-around;
+  align-items: center; */
+  /* border: 2px solid black; */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+  border: none;
+  gap: 1px;
+  row-gap: 20px;
+}
+
+.eachCard{
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  text-decoration: none;
+  word-wrap: break-word;
+}
+
+.spot-list-container > * {
+  border: 1px solid black;
+  border-radius: 10px;
+  height: 300px;
+  width: 400px;
+}
