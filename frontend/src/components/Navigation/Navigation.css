@@ -1,3 +1,77 @@
-.hidden {
+* {
+  margin: 0;
+
+}
+
+ul, ol {
+  list-style: none;
+}
+
+ .hidden {
   display: none;
 }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  z-index: 100;
+  box-shadow: rgb(0 0 0 / 8%) 0 1px 0;
+  height: 120px;
+}
+
+.logo-image{
+  object-fit: contain;
+  height: 60px;
+  margin-top: 10px;
+  margin-left: 20px;
+ }
+
+
+.menu-right{
+  display: flex;
+  justify-content: center;
+}
+
+.Login, .Sign-Up, .spots-button {
+  margin: 10px;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 25px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+  color: #3c4043;
+  cursor: pointer;
+  height: 48px;
+  max-width: 100%;
+  padding: 2px 24px;
+}
+
+.Login:hover, .Sign-Up:hover, .spots-button:hover {
+  background: #FF5A5F;
+  color:white;
+}
+
+
+/* .search-bar{
+  display: flex;
+  flex: 1;
+  align-items: center;
+  max-width: fit-content;
+  padding: 10px;
+  height: 30px;
+  border: 1px solid lightgray;
+  border-radius: 300px;
+}
+
+.search-bar > input {
+  border: none;
+  width: 250px;
+  text-align: center;
+  outline-width: 0;
+} */
+
+/* .fa-magnifying-glass{
+  margin-right: 10px;
+} */

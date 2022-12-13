@@ -5,40 +5,55 @@ import ProfileButton from './ProfileButton';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import {useHistory} from 'react-router-dom'
+import logoImagee from '../images/Airbnb.png'
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
+  const history = useHistory()
   const sessionUser = useSelector(state => state.session.user);
+
+  const handleClick = () => {
+    // Navigate to the specified path
+    history.push("/spots");
+  }
 
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <li>
+      <div>
         <ProfileButton user={sessionUser} />
-      </li>
+      </div>
+
     );
   } else {
     sessionLinks = (
-      <li>
+    <div className='menu-right'>
+      <button className='spots-button' onClick={handleClick}>View all Spots</button>
         <OpenModalButton
-          buttonText="Log In"
+          buttonText="Login"
           modalComponent={<LoginFormModal />}
         />
         <OpenModalButton
-          buttonText="Sign Up"
+          buttonText="Sign-Up"
           modalComponent={<SignupFormModal />}
         />
-      </li>
+    </div>
     );
   }
 
   return (
-    <ul>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
-      </li>
-      {isLoaded && sessionLinks}
-    </ul>
+  <div className='header'>
+    <div>
+      <NavLink exact to="/"><img  className='logo-image' src={logoImagee} alt='Logo'></img></NavLink>
+    </div>
+    {/* <div className='search-bar'>
+      <input type='text' />
+        <i class="fa-solid fa-magnifying-glass"></i>
+    </div> */}
+    {isLoaded && sessionLinks}
+</div>
+
   );
 }
 
