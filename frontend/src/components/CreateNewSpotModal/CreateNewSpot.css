@@ -1,0 +1,7 @@
+.newHomeModal {
+  width: 700px;
+  height: 700px;
+}
+.modal-content {
+  display: flex;
+}

@@ -11,25 +11,28 @@ const ShowSpots = () => {
   const dispatch = useDispatch()
   const {spotId} = useParams()
   const spot = useSelector(state => {return state.spots.singleSpot})
-  const spotInfo = useSelector(state => state.spots.allSpots)
 
 
-  useEffect(() =>{
+  useEffect(() => {
     dispatch(getASpot(spotId))
   },[spotId])
 
-
-
+  if(!spot.SpotImages) return null
   if(!spot) return null
 
   return (
     <>
-    <img src={spotInfo[spotId].previewImage}  alt='prevImage' />
     <div>
+      <div>
+        {spot.SpotImages.map(eachImage => (
+          <img src={eachImage.url}></img>
+        ))}
+      </div>
+    <img />
       {spot.address},{spot.state}
     </div>
     <div>
-      {spot.avgRaating}
+      {spot.avgStarRating}
     </div>
     </>
   )

@@ -1,9 +1,9 @@
-// import { csrfFetch } from './csrf';
+import { csrfFetch } from './csrf';
 
 //action constants
 const LOAD_SPOTS = 'spots/loadSpots'
 const LOAD_A_SPOT = 'spots/loadASpot'
-// const ADD_SPOT = 'spots/addASpot'
+const ADD_SPOT = 'spots/addASpot'
 // const DELETE_SPOT = 'spots/deleteSpot'
 
 
@@ -22,23 +22,17 @@ const loadASpot = (spot) => {
   }
 }
 
+const addOneSpot = (newSpot) => {
+  return {
+    type: ADD_SPOT,
+    newSpot
+  }
+}
 
-// const addASpot = (spot) => {
-//   return {
-//     type: ADD_SPOT,
-//     payload: spot
-//   }
-// }
-
-// export const deleteSpot = () => {
-//   return {
-//     type: DELETE_SPOT,
-//   }
-// }
 
 //thunk function
 export const getSpots = () => async (dispatch) => {
-  const response = await fetch('/api/spots');
+  const response = await csrfFetch('/api/spots');
 
   if (response.ok) {
     const data = await response.json();
@@ -48,7 +42,7 @@ export const getSpots = () => async (dispatch) => {
 
 
 export const getASpot = (spotId) => async (dispatch) => {
-  const response = await fetch(`/api/spots/${spotId}`)
+  const response = await csrfFetch(`/api/spots/${spotId}`)
 
   if(response.ok) {
     const data = await response.json()
@@ -56,6 +50,42 @@ export const getASpot = (spotId) => async (dispatch) => {
   }
 }
 
+
+export const createSpot = (newSpot, createdSpotImage) => async dispatch => {
+  const newSpotResponse = await csrfFetch('/api/spots', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newSpot)
+  })
+
+  if(newSpotResponse.ok) {
+    const newSpot = await newSpotResponse.json()
+
+    createdSpotImage['spotId'] = newSpot.id
+
+    const resSpotImage = await csrfFetch(`/api/spots/${newSpot.id}/images`,{
+      method: 'POST',
+      headers:  { 'Content-Type': 'application/json' },
+      body: JSON.stringify(createdSpotImage)
+    })
+
+    if(resSpotImage.ok){
+      const newImage = await resSpotImage.json()
+
+      const completedObj = {...newSpot, 'previewImage':newImage.url}
+      dispatch(addOneSpot(completedObj))
+      return completedObj
+    }
+
+
+
+  }
+
+
+
+
+
+}
 
 
 
@@ -76,6 +106,12 @@ const spotsReducer = (state = initialState, action) => {
       const loadSpot = {...state}
       loadSpot.singleSpot = action.spot
       return loadSpot
+    case ADD_SPOT:
+      const newState = {...state}
+      const newAllSpots = {...state.allSpots}
+      newAllSpots[action.newSpot.id] = action.newSpot
+      newState.allSpots = newAllSpots
+      return newState
     default:
        return state
   }

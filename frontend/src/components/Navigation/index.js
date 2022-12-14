@@ -5,9 +5,11 @@ import ProfileButton from './ProfileButton';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import CreateNewSpot from '../CreateNewSpotModal';
 import {useHistory} from 'react-router-dom'
 import logoImagee from '../images/Airbnb.png'
 import './Navigation.css';
+
 
 function Navigation({ isLoaded }){
   const history = useHistory()
@@ -17,13 +19,24 @@ function Navigation({ isLoaded }){
     // Navigate to the specified path
     history.push("/spots");
   }
+  const addAspot = () => {
+    history.push('/')
+  }
 
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
+      <>
       <div>
         <ProfileButton user={sessionUser} />
       </div>
+      <div>
+        <OpenModalButton
+        buttonText='AirBnB Your Home'
+        modalComponent={<CreateNewSpot />}
+        />
+      </div>
+      </>
 
     );
   } else {

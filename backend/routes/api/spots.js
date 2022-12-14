@@ -104,9 +104,10 @@ router.get('/', async(req,res) => {
   spotsList.push(eachSpot.toJSON())
  })
 
- let sum = 0
- let count = 0
+
  spotsList.forEach(eachSpot => {
+  let sum = 0
+  let count = 0
   let reviewsForEachSpot = eachSpot.Reviews
    reviewsForEachSpot.forEach(eachReview => {
     if(eachReview.stars){
