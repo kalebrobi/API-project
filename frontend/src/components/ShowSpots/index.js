@@ -23,11 +23,11 @@ const ShowSpots = () => {
   return (
     <>
     <div>
-      <div>
+
         {spot.SpotImages.map(eachImage => (
-          <img src={eachImage.url}></img>
+      <div key={spot.id}><img src={eachImage.url}></img></div>
         ))}
-      </div>
+
     <img />
       {spot.address},{spot.state}
     </div>

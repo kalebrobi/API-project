@@ -6,6 +6,7 @@ import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import CreateNewSpot from '../CreateNewSpotModal';
+import EditSpot from '../EditSpot';
 import {useHistory} from 'react-router-dom'
 import logoImagee from '../images/Airbnb.png'
 import './Navigation.css';
@@ -36,6 +37,10 @@ function Navigation({ isLoaded }){
         modalComponent={<CreateNewSpot />}
         />
       </div>
+      <div>
+        <NavLink to={'/account'}><button>Your Profile</button></NavLink>
+      </div>
+
       </>
 
     );

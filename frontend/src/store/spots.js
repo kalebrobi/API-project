@@ -4,7 +4,8 @@ import { csrfFetch } from './csrf';
 const LOAD_SPOTS = 'spots/loadSpots'
 const LOAD_A_SPOT = 'spots/loadASpot'
 const ADD_SPOT = 'spots/addASpot'
-// const DELETE_SPOT = 'spots/deleteSpot'
+const UPDATE_SPOT = 'spots/updateSpot'
+const DELETE = 'spots/deleteSpot'
 
 
 //action creators
@@ -29,8 +30,50 @@ const addOneSpot = (newSpot) => {
   }
 }
 
+const updateSpot = (updatedSpot) => {
+  return {
+    type: UPDATE_SPOT,
+    updatedSpot
+  }
+}
+
+export const deleteSpot = (spotId) => ({
+  type: DELETE,
+  spotId
+})
 
 //thunk function
+
+export const deleteASpot = (spotId) => async dispatch => {
+  const response = await csrfFetch(`/api/spots/${spotId}`,{
+    method: 'DELETE'
+  })
+  if(response.ok) {
+    const spot = await response.json()
+    dispatch(deleteSpot(spot))
+  }
+}
+
+
+
+export const updateASpot = (payload,spotId) => async dispatch => {
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+
+  })
+  if(response.ok) {
+    const editedSpot = await response.json()
+    dispatch(updateSpot(editedSpot))
+  return editedSpot
+  }
+
+}
+
+
+
+
 export const getSpots = () => async (dispatch) => {
   const response = await csrfFetch('/api/spots');
 
@@ -76,14 +119,7 @@ export const createSpot = (newSpot, createdSpotImage) => async dispatch => {
       dispatch(addOneSpot(completedObj))
       return completedObj
     }
-
-
-
   }
-
-
-
-
 
 }
 
@@ -112,6 +148,16 @@ const spotsReducer = (state = initialState, action) => {
       newAllSpots[action.newSpot.id] = action.newSpot
       newState.allSpots = newAllSpots
       return newState
+    case UPDATE_SPOT:
+      const newStateCopy = {...state}
+      const newSpotsUpdated = {...state.allSpots}
+      newSpotsUpdated[action.updatedSpot.id] = action.updatedSpot
+      newStateCopy.allSpots = newSpotsUpdated
+      return newStateCopy
+    case DELETE:
+        const newCopy = {...state, allSpots: {...state.allSpots}};
+        delete newCopy.allSpots[action.spotId];
+        return newCopy;
     default:
        return state
   }

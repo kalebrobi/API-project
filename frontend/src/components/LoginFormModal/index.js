@@ -25,13 +25,12 @@ function LoginFormModal() {
   };
 
   const handleDemo = (e) => {
-   // e.preventDefault()
+  //  e.preventDefault()
     setCredential('Demo-user2')
     setPassword('password2')
     return dispatch(sessionActions.login({ credential, password }))
     .then(closeModal)
   }
-
 
 
 

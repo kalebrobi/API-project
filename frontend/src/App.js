@@ -6,6 +6,7 @@ import Navigation from "./components/Navigation";
 import LoadAllSpots from "./components/LoadAllSpots";
 import ShowSpots from "./components/ShowSpots";
 import spotsReducer from "./store/spots";
+import EditSpot from "./components/EditSpot";
 
 
 
@@ -28,6 +29,9 @@ function App() {
           </Route>
           <Route  path={'/spots/:spotId'} >
             <ShowSpots />
+          </Route>
+          <Route  path={'/account'} >
+            <EditSpot  />
           </Route>
 
         </Switch>
