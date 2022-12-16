@@ -21,13 +21,13 @@ function EditSpot() {
 
 
 
-  const deleteSpot = (spotId) => {
-    dispatch(deleteASpot(spotId))
+  const deleteSpot = async (spotId) => {
+   await dispatch(deleteASpot(spotId))
     history.push('/')
   }
 
 
-  // console.log(userSpots)
+
 
 
   useEffect(() => {
