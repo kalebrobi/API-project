@@ -15,7 +15,7 @@ function UserReview() {
   const reviewsArr = Object.values(reviewObj)
   const userReviews = reviewsArr.filter(review => {return review.userId === sessionUser.id})
 
-  
+
 
   // console.log("SPOT REVIEWED", reviewdSpotsArr)
   // console.log('Reviews',userReviews)
