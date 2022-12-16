@@ -5,24 +5,34 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getASpot } from "../../store/spots";
 import { getReviews } from "../../store/review";
+import CreateAReview from "../CreateAReview";
+
 
 const ShowSpots = () => {
   const dispatch = useDispatch()
   const {spotId} = useParams()
   const spot = useSelector(state => {return state.spots.singleSpot})
   const reviews = useSelector(state => state.reviews.spot)
+  const user = useSelector(state => state.session.user)
 
   const reviewsArr = Object.values(reviews)
+
+
+
 
   useEffect(() => {
     dispatch(getASpot(spotId));
     dispatch(getReviews(spotId));
   }, [spotId]);
 
-  
-  const reviewSubmit = async (e) => {
-    e.preventDefault()
-  }
+  // const checker = reviewsArr.find((review) => review.userId === user.id)
+  // if(checker) {
+  //   console.log("TRUE")
+  // } else console.log("FALSE")
+
+
+
+
 
 
   if(!spot.SpotImages) return null
@@ -52,11 +62,7 @@ const ShowSpots = () => {
       ))}
     </div>
     <div>
-  <h1>Leave a review</h1>
-    <form onSubmit={reviewSubmit} id="review-form" >
-        <textarea id="review-text" name="review"></textarea>
-        <button type="submit">Submit review</button>
-      </form>
+      {user !== null && user.id !== spot.ownerId ? <CreateAReview /> : '' }
     </div>
     </>
   )

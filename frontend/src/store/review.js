@@ -2,7 +2,8 @@ import { csrfFetch } from './csrf';
 
 const LOAD_REVIEWS = 'review/loadReviews'
 const LOAD_USERS_REVIEWS = 'review/loadUserReviews'
-const DELETE_REVIEW = 'review/deleteAReview'
+const DELETE_REVIEW = 'review/deleteReview'
+const CREATE_REVIEW = 'review/createReview'
 
 
 
@@ -27,11 +28,26 @@ const deleteReview = (reviewId) => ({
   reviewId
 })
 
+const createReview = (newReview) => {
+  return {
+    type: CREATE_REVIEW,
+    newReview
+  }
+}
+
 
 
 
 
 // thunks
+export const createAReview = (newReview) => async dispatch => {
+
+}
+
+
+
+
+
 export const getUsersReviews = () => async (dispatch) => {
   const response = await csrfFetch('/api/reviews/current')
   if(response.ok) {
@@ -58,9 +74,10 @@ export const deleteAReview = (reviewId) => async dispatch => {
   })
   if(response.ok) {
     const review = await response.json()
-    dispatch(deleteAReview)
+    dispatch(deleteReview)
   }
 }
+
 
 
 
