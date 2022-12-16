@@ -7,10 +7,13 @@ import { getASpot } from "../../store/spots";
 
 
 
+
+
 const ShowSpots = () => {
   const dispatch = useDispatch()
   const {spotId} = useParams()
   const spot = useSelector(state => {return state.spots.singleSpot})
+
 
 
   useEffect(() => {
@@ -22,13 +25,11 @@ const ShowSpots = () => {
 
   return (
     <>
-    <div>
-
-        {spot.SpotImages.map(eachImage => (
+  <div>
+    {spot.SpotImages.map(eachImage => (
       <div key={spot.id}><img src={eachImage.url}></img></div>
         ))}
-
-    <img />
+        <img />
       {spot.address},{spot.state}
     </div>
     <div>

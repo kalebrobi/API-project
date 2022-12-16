@@ -26,11 +26,6 @@ function EditSpotModal({spot}) {
 
 const spotId = spot.spot.id
 
-  // console.log("THISISSPOT",address)
-
-  // useEffect(() => {
-  //   dispatch(updateASpot())
-  // }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -62,17 +57,6 @@ const spotId = spot.spot.id
       (closeModal)
       (history.push(`/spots/${spotId}`))
     }
-
-
-
-    // const editedSpot =  dispatch(updateASpot(payload, spotId))
-
-
-    // if(editedSpot) {
-    //   (closeModal)
-    //   (history.push(`/spots/${spotId}`))
-    // }
-
 
 
 

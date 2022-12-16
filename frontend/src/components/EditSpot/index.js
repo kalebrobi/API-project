@@ -21,10 +21,12 @@ function EditSpot() {
 
 
 
-  const deleteSpot = (spotId) => {
-    dispatch(deleteASpot(spotId))
-    history.push('/')
+  const deleteSpot = async (spotId) => {
+    await dispatch(deleteASpot(spotId))
+    history.push('/spots')
+
   }
+
 
 
   // console.log(userSpots)

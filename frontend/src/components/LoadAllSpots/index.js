@@ -12,10 +12,9 @@ const LoadAllSpots = () => {
   const spotsArr = Object.values(spots)
 
 
-
   useEffect(() => {
     dispatch(getSpots())
-  },[])
+  },[dispatch])
 
 
   if(!spots) return null
