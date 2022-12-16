@@ -38,6 +38,9 @@ function Navigation({ isLoaded }){
         />
       </div>
       <div>
+        <NavLink to={'/reviews'}><button>Your Reviews</button></NavLink>
+      </div>
+      <div>
         <NavLink to={'/account'}><button>Your Profile</button></NavLink>
       </div>
 

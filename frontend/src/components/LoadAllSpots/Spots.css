@@ -18,7 +18,6 @@
 .eachCard{
   display: flex;
   flex-direction: column;
-  justify-content: end;
   text-decoration: none;
   word-wrap: break-word;
   color: black;

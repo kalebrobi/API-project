@@ -7,6 +7,8 @@ import LoadAllSpots from "./components/LoadAllSpots";
 import ShowSpots from "./components/ShowSpots";
 import spotsReducer from "./store/spots";
 import EditSpot from "./components/EditSpot";
+import UserReview from "./components/UserReviews";
+
 
 
 
@@ -32,6 +34,9 @@ function App() {
           </Route>
           <Route  path={'/account'} >
             <EditSpot  />
+          </Route>
+          <Route path={'/reviews'} >
+            <UserReview />
           </Route>
 
         </Switch>
