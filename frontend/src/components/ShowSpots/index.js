@@ -14,13 +14,15 @@ const ShowSpots = () => {
 
   const reviewsArr = Object.values(reviews)
 
-  
-
   useEffect(() => {
     dispatch(getASpot(spotId));
     dispatch(getReviews(spotId));
   }, [spotId]);
 
+  
+  const reviewSubmit = async (e) => {
+    e.preventDefault()
+  }
 
 
   if(!spot.SpotImages) return null
@@ -48,6 +50,13 @@ const ShowSpots = () => {
           <li>{eachReview.stars} Stars</li>
         </ul>
       ))}
+    </div>
+    <div>
+  <h1>Leave a review</h1>
+    <form onSubmit={reviewSubmit} id="review-form" >
+        <textarea id="review-text" name="review"></textarea>
+        <button type="submit">Submit review</button>
+      </form>
     </div>
     </>
   )
