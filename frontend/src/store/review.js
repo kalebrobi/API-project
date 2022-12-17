@@ -39,8 +39,18 @@ const createReview = (newReview) => {
 
 
 
-// thunks
-export const createAReview = (newReview) => async dispatch => {
+// // thunks
+export const createAReview = (newReview, spotId) => async dispatch => {
+  const newReviewResponse = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newReview)
+  })
+  if(newReviewResponse.ok) {
+    const data = await newReviewResponse.json()
+    dispatch(createReview(data))
+    return data
+  }
 
 }
 
@@ -76,6 +86,7 @@ export const deleteAReview = (reviewId) => async dispatch => {
     const review = await response.json()
     dispatch(deleteReview)
   }
+
 }
 
 
@@ -98,6 +109,11 @@ const reviewReducer = (state = initialState, action) => {
       action.list.Reviews.forEach(review => {
         newState.user[review.id] = review
       })
+      return newState
+    }
+    case CREATE_REVIEW: {
+      const newState = {...state}
+      newState.spot[action.newReview.id] = action.newReview
       return newState
     }
     default:

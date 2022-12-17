@@ -1,5 +1,4 @@
 import LoadAllSpots from "../LoadAllSpots";
-
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -62,7 +61,9 @@ const ShowSpots = () => {
       ))}
     </div>
     <div>
-      {user !== null && user.id !== spot.ownerId ? <CreateAReview /> : '' }
+
+      {user !== null && user.id !== spot.ownerId ? <CreateAReview spot={spot} /> : '' }
+  
     </div>
     </>
   )
