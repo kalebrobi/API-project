@@ -21,18 +21,20 @@ const LoadAllSpots = () => {
   if(!spots) return null
 
 return (
-<div>
   <div className='spot-list-container'>
     {spotsArr.map(spot => (
     <NavLink to={`spots/${spot.id}`} key={spot.id} className='eachCard'>
-      <img className='images' src={spot.previewImage} alt='prevImage'></img>
-      <div className='city_state'>{spot.city},{spot.state}</div>
-      <div className='average_rating'>{spot.avgRating}</div>
-      <div className='price_night'>${spot.price} night</div>
+      <img className='images' src={spot.previewImage} alt='prevImage'/>
+        {/* <div className='spot-details'> */}
+        <div className='city_state'>{spot.city},{spot.state}
+        {spot.avgRating !== null ? <div><i class="fa-sharp fa-solid fa-star"></i> {spot.avgRating}</div> : <div>no reviews</div>}
+        </div>
+        <div className='name-of-spot'>{spot.name}</div>
+        <div className='price_night'>${spot.price} night</div>
+     {/* </div> */}
     </NavLink>
     ))}
   </div>
-</div>
 )}
 
 

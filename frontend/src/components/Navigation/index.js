@@ -28,9 +28,9 @@ function Navigation({ isLoaded }){
   if (sessionUser) {
     sessionLinks = (
       <>
-      <div>
-        <ProfileButton user={sessionUser} />
-      </div>
+  <div className='dropdown'>
+  <button className='dropdown-button'>Drop Down Button</button>
+    <div className='dropdown-content'>
       <div>
         <OpenModalButton
         buttonText='AirBnB Your Home'
@@ -38,10 +38,15 @@ function Navigation({ isLoaded }){
         />
       </div>
       <div>
-        <NavLink to={'/reviews'}><button>Your Reviews</button></NavLink>
+        <NavLink to={'/reviews'}><button className=''>Your Reviews</button></NavLink>
       </div>
       <div>
         <NavLink to={'/account'}><button>Your Profile</button></NavLink>
+      </div>
+    </div>
+  </div>
+      <div>
+        <ProfileButton user={sessionUser} />
       </div>
 
       </>
@@ -50,7 +55,7 @@ function Navigation({ isLoaded }){
   } else {
     sessionLinks = (
     <div className='menu-right'>
-      <button className='spots-button' onClick={handleClick}>View all Spots</button>
+      {/* <button className='spots-button' onClick={handleClick}>View all Spots</button> */}
         <OpenModalButton
           buttonText="Login"
           modalComponent={<LoginFormModal />}
@@ -64,16 +69,11 @@ function Navigation({ isLoaded }){
   }
 
   return (
+
   <div className='header'>
-    <div>
       <NavLink exact to="/"><img  className='logo-image' src={logoImagee} alt='Logo'></img></NavLink>
-    </div>
-    {/* <div className='search-bar'>
-      <input type='text' />
-        <i class="fa-solid fa-magnifying-glass"></i>
-    </div> */}
     {isLoaded && sessionLinks}
-</div>
+  </div>
 
   );
 }
