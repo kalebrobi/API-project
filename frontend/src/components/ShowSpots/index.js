@@ -16,6 +16,7 @@ const ShowSpots = () => {
 
   const reviewsArr = Object.values(reviews)
 
+  console.log(reviewsArr[0])
 
 
 
@@ -39,33 +40,37 @@ const ShowSpots = () => {
   if(!reviews) return null
 
   return (
-    <>
+<>
+<div className="top-container">
     <div>
-
-        {spot.SpotImages.map(eachImage => (
-      <div key={spot.id}><img src={eachImage.url}></img></div>
+    {spot.name}
+    </div>
+    <div>
+    <i class="fa-sharp fa-solid fa-star"></i>{spot.avgStarRating} ~ {spot.numReviews} reviews ~ {spot.city},{spot.state},{spot.country}
+    </div>
+      {spot.SpotImages.map(eachImage => (
+        <div key={spot.id}><img src={eachImage.url}></img></div>
         ))}
+</div>
 
-    <img />
-      {spot.address},{spot.state}
-    </div>
+<div className="bottom-container">
     <div>
-      {spot.avgStarRating}
+      {spot.description}
     </div>
-    <div>
-      {reviewsArr.map(eachReview => (
-        <ul key={eachReview.id}>
-          <li>{eachReview.review}</li>
-          <li>{eachReview.stars} Stars</li>
-        </ul>
-      ))}
-    </div>
-    <div>
-
-      {user !== null && user.id !== spot.ownerId ? <CreateAReview spot={spot} /> : '' }
-  
-    </div>
-    </>
+      <div>
+        {reviewsArr.map(eachReview => (
+          <ul key={eachReview.id}>
+            <li>{eachReview.id}</li>
+            <li>{eachReview.review}</li>
+            <li>{eachReview.stars} Stars</li>
+          </ul>
+        ))}
+      </div>
+  <div className="leave-a-review">
+    {user !== null && user.id !== spot.ownerId ? <CreateAReview spot={spot} /> : '' }
+  </div>
+</div>
+</>
   )
 }
 
