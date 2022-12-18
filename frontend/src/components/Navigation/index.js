@@ -28,11 +28,15 @@ function Navigation({ isLoaded }){
   if (sessionUser) {
     sessionLinks = (
       <>
+  <div className='loggedIn-menu-right'>
+  <ProfileButton user={sessionUser} />
   <div className='dropdown'>
-  <button className='dropdown-button'>Drop Down Button</button>
+  <button className='dropdown-button'>My Account</button>
     <div className='dropdown-content'>
+
       <div>
         <OpenModalButton
+        className={'airbnb-your-home-button'}
         buttonText='AirBnB Your Home'
         modalComponent={<CreateNewSpot />}
         />
@@ -45,11 +49,8 @@ function Navigation({ isLoaded }){
       </div>
     </div>
   </div>
-      <div>
-        <ProfileButton user={sessionUser} />
-      </div>
-
-      </>
+  </div>
+</>
 
     );
   } else {
