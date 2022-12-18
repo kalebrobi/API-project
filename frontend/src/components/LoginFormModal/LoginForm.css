@@ -1,4 +1,47 @@
 .logIn-form {
-  width: 600px;
-  height: 200px;
+  width: 460px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.modalInput{
+  width: 400px;
+  height: 45px;
+  border-radius: 8px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, .2) 0 0px 0px -2px,rgba(0, 0, 0, .30) 0 1px 9px 0;
+  /* display: flex; */
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid rgb(108, 108, 108);
+  text-align: center;
+  outline: none;
+}
+
+.modalButton {
+  /* display: flex; */
+  /* margin: 10px; */
+  align-items: center;
+  background-color: #fff;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+  color: #3c4043;
+  cursor: pointer;
+  /* padding: 2px 24px; */
+  width: 400px;
+  height: 45px;
+  border-radius: 8px;
+  background-color: transparent;
+}
+
+.modalButton:hover {
+  background: #FF5A5F;
+  color:white;
+}
+
+.logIn-form > h1 {
+  color: #FF5A5F;
 }

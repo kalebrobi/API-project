@@ -61,94 +61,130 @@ function CreateNewSpot() {
 
 
   return (
-
-    <div className="newHomeModal">
+  <form onSubmit={handleSubmit} className='addSpotModal'>
+    <div className="newHomeForm">
       <h1>Lets Add Your Home</h1>
-      <form onSubmit={handleSubmit} className='addSpotModal'>
         <ul>
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>
           ))}
         </ul>
+      <div>
         <input
           type='text'
           onChange={(e) => setAddress(e.target.value)}
           value={address}
           placeholder='Address'
           name="address"
+          className="newHome-modalInput"
         />
+      </div>
+      <div>
         <input
           type='text'
           onChange={(e) => setCity(e.target.value)}
           value={city}
           placeholder='City'
           name='city'
+          className="newHome-modalInput"
         />
+      </div>
+      <div>
           <input
           type='text'
           onChange={(e) => setState(e.target.value)}
           value={state}
           placeholder='State'
           name='state'
+          className="newHome-modalInput"
         />
+      </div>
+      <div>
           <input
           type='text'
           onChange={(e) => setCountry(e.target.value)}
           value={country}
           placeholder='Country'
           name='country'
+          className="newHome-modalInput"
         />
+      </div>
+      <div>
           <input
           type='text'
           onChange={(e) => setLat(e.target.value)}
           value={lat}
           name='lat'
+          disabled={true}
+          className="newHome-modalInput"
         />
+      </div>
+      <div>
           <input
           type='text'
           onChange={(e) => setLng(e.target.value)}
           value={lng}
           name='lng'
+          disabled={true}
+          className="newHome-modalInput"
         />
+      </div>
+      <div>
           <input
           type='text'
           onChange={(e) => setName(e.target.value)}
           value={name}
           placeholder='Name'
           name='name'
+          className="newHome-modalInput"
         />
+      </div>
+      <div>
           <input
           type='text'
           onChange={(e) => setDescription(e.target.value)}
           value={description}
           placeholder='Text area for description'
           name='description'
+          className="newHome-modalInput"
         />
+      </div>
+      <div>
           <input
           type='text'
           onChange={(e) => setPrice(e.target.value)}
           value={price}
           placeholder='Price'
           name='price'
+          className="newHome-modalInput"
         />
+      </div>
+      <div>
            <input
           type='text'
           onChange={(e) => setUrl(e.target.value)}
           value={url}
           placeholder='Image Url'
           name='url'
+          className="newHome-modalInput"
         />
+      </div>
+      <div>
            <input
           type='text'
           onChange={(e) => setPreview(e.target.value)}
           value={preview}
           placeholder='True'
+          disabled={true}
           name='preview'
+          className="newHome-modalInput"
         />
-        <button type='submit'>Submit</button>
-      </form>
+      </div>
+    <div>
+      <button className="newHome-button" type='submit'>Submit</button>
     </div>
-
+    </div>
+  </form>
   )
 }
 

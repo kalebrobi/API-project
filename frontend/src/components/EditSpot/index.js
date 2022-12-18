@@ -46,8 +46,6 @@ function EditSpot() {
       <div className='city_state'>{spot.city},{spot.state}</div>
       <div className='average_rating'>{spot.avgRating}</div>
       <div className='price_night'>${spot.price} night</div>
-      {/* <button>Edit</button>
-      <button>Delete</button> */}
       <OpenModalButton
         modalComponent={<EditSpotModal spot={{spot}} />}
         buttonText={'Edit'}
