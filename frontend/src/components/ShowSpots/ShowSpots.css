@@ -1,0 +1,55 @@
+.top-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-left: 30px;
+  margin-top: 16px;
+}
+
+.top-container > h1 {
+  margin-bottom: 5px;
+}
+.top-container > div {
+  margin: 7px 0;
+}
+
+.img-container > img {
+  /* border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px; */
+  width: 500px;
+  border-radius: 15px;
+}
+
+.bottom-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+  width: 650px;
+}
+
+.spot-description {
+  border-top: 1px solid rgb(222, 222, 222);
+  margin-top: 35px;
+}
+.spot-description > h2 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+
+.review-section {
+  border-top: 1px solid rgb(222, 222, 222);
+  margin-top: 35px;
+}
+.review-section > h3 {
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+
+.reviews{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 50px;
+  grid-template-columns: 65% 35%;
+  margin-bottom: 90px;
+}

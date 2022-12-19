@@ -41,16 +41,16 @@ function EditSpot() {
 <div>
   <div className='containerDivNew'>
     {userSpots.map(spot => (
-  <div key={spot.id}>
+  <div className="eachCard" key={spot.id}>
       <img className='imagesNewNew' src={spot.previewImage} alt='prevImage'></img>
       <div className='city_state'>{spot.city},{spot.state}</div>
-      <div className='average_rating'>{spot.avgRating}</div>
+      {/* <div className='average_rating'>{spot.avgRating}</div> */}
       <div className='price_night'>${spot.price} night</div>
       <OpenModalButton
         modalComponent={<EditSpotModal spot={{spot}} />}
         buttonText={'Edit'}
       />
-      <button onClick={() => deleteSpot(spot.id)}>Delete</button>
+      <button className="Delete" onClick={() => deleteSpot(spot.id)}>Delete</button>
       </div>
     ))}
   </div>

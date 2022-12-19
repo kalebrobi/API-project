@@ -1,14 +1,5 @@
-.imagesNewNew {
-  width: 300px;
-  height: 300px
-}
-.containerDivNew{
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-.eachCard{
+
+.eachCardReview{
   display: flex;
   border: 0px black solid;
   border-radius: 15px;
@@ -20,7 +11,7 @@
   box-shadow: 0px 2px 15px -7px black;
 }
 
-.Edit, .Delete {
+.reviewDeleteButton{
   margin: 5px;
   align-items: center;
   background-color: #fff;
@@ -33,7 +24,18 @@
   max-width: 100%;
   padding: 2px 24px;
 }
-.Edit:hover, .Delete:hover{
+
+.reviewDeleteButton:hover{
   background: #FF5A5F;
   color:white;
+}
+
+.city_state-review{
+  margin-top: 10px;
+}
+
+
+.review-on-edit{
+  margin-top: 10px;
+  margin-bottom: 10px ;
 }

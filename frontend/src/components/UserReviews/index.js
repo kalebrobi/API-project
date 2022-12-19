@@ -2,6 +2,7 @@ import React, {useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import { deleteAReview, getUsersReviews } from "../../store/review";
+import './UserReviews.css'
 
 
 
@@ -34,20 +35,19 @@ function UserReview() {
 
   return (
     <>
-    <div>
-       <div className='containerDivNew'>
+<div>
+  <div className='containerDivNew'>
     {userReviews.map(eachReview => (
-      <div key={eachReview.id}>
+      <div className="eachCardReview" key={eachReview.id}>
         <img className='imagesNewNew' src={eachReview.Spot.previewImage} alt='prevImage'></img>
-        <div className='city_state'>{eachReview.Spot.city},{eachReview.Spot.state}</div>
+        <div className='city_state-review'>{eachReview.Spot.city},{eachReview.Spot.state}</div>
         <div className='average_rating'>{eachReview.Spot.avgRating}</div>
-        <div>{eachReview.review}</div>
-        <button onClick={() => deleteReview(eachReview.id)}>Delete Review</button>
+        <div className="review-on-edit">{eachReview.review}</div>
+        <button className="reviewDeleteButton" onClick={() => deleteReview(eachReview.id)}>Delete Review</button>
       </div>
     ))}
   </div>
-
-    </div>
+</div>
     </>
   )
 }

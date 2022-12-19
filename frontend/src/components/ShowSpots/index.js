@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { getASpot } from "../../store/spots";
 import { getReviews } from "../../store/review";
 import CreateAReview from "../CreateAReview";
+import './ShowSpots.css'
 
 
 const ShowSpots = () => {
@@ -16,7 +17,7 @@ const ShowSpots = () => {
 
   const reviewsArr = Object.values(reviews)
 
-  console.log(reviewsArr[0])
+
 
 
 
@@ -42,32 +43,41 @@ const ShowSpots = () => {
   return (
 <>
 <div className="top-container">
-    <div>
+    <h1>
     {spot.name}
-    </div>
+    </h1>
     <div>
     <i class="fa-sharp fa-solid fa-star"></i>{spot.avgStarRating} ~ {spot.numReviews} reviews ~ {spot.city},{spot.state},{spot.country}
     </div>
       {spot.SpotImages.map(eachImage => (
-        <div key={spot.id}><img src={eachImage.url}></img></div>
+        <div className="img-container" key={spot.id}><img src={eachImage.url}></img></div>
         ))}
 </div>
 
 <div className="bottom-container">
-    <div>
+    <div className="spot-description">
+      <h2>About this home!</h2>
       {spot.description}
     </div>
-      <div>
+      <div className="review-section">
+      <h3>Reviews</h3>
+        <div className="reviews">
+
         {reviewsArr.map(eachReview => (
-          <ul key={eachReview.id}>
-            <li>{eachReview.id}</li>
-            <li>{eachReview.review}</li>
-            <li>{eachReview.stars} Stars</li>
-          </ul>
+          <div key={eachReview.id}>
+            {/* <div>
+            <i class="fa-solid fa-circle-user"></i>
+              {eachReview.User.firstName}
+            </div> */}
+            <i class="fa-regular fa-circle-user"></i>
+            <div className="eachReview">{eachReview.review} {eachReview.stars} <i class="fa-sharp fa-solid fa-star"></i></div>
+          </div>
         ))}
       </div>
+
   <div className="leave-a-review">
     {user !== null && user.id !== spot.ownerId ? <CreateAReview spot={spot} /> : '' }
+  </div>
   </div>
 </div>
 </>

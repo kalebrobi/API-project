@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createAReview } from "../../store/review";
-
+import './CreateAReview.css'
 
 function CreateAReview({spot}) {
   const history = useHistory()
@@ -24,7 +24,7 @@ function CreateAReview({spot}) {
    await dispatch(createAReview(newReview, spotId)).catch(
     async (res) => {
       const data = await res.json()
-      console.log("TEST", data.message)
+      // console.log("TEST", data.message)
       // if(data && data.errors) setErrors(data.errors)
       //if(data && data.message) setErrors([data.message])
       if(data && data.errors) {
@@ -39,6 +39,7 @@ function CreateAReview({spot}) {
     setReview('')
     setStars('')
     (history.push(`/spots/${spotId}`))
+    // (history.push(`/spots`))
 
 
 
@@ -46,30 +47,36 @@ function CreateAReview({spot}) {
 }
 
   return(
-    <div>
-      <h1>Leave a review</h1>
-     <form onSubmit={handleSubmit} id="review-form">
+    <>
+   <form onSubmit={handleSubmit} id="review-form">
+     <h3>Leave a review</h3>
         <ul>
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>
           ))}
         </ul>
-        <input
+      <div className="review-input-container">
+        <textarea
          type='text'
          onChange={(e) => setReview(e.target.value)}
          value={review}
          id="review-text"
          name="review"
         />
+      </div>
+      <div>
         <input
+         className="star-rating-input"
          type='text'
          onChange={(e) => setStars(e.target.value)}
          value={stars}
-        //  placeholder="Stars"
+         placeholder="Star Rating"
         />
-        <button type="submit">Submit review</button>
+      </div>
+        <button className="review-submit-button" type="submit">Submit review</button>
       </form>
-    </div>
+    </>
+
   )
 
 
